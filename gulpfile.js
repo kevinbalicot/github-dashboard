@@ -48,7 +48,9 @@ gulp.task('css', function () {
   ;
 });
 
-var js = [];
+var js = [
+    './bower_components/jquery/dist/jquery.min.js'
+];
 
 gulp.task('js', function () {
   gulp.src(js)
