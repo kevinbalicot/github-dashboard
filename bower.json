@@ -1,0 +1,16 @@
+{
+  "name": "github-dashboard",
+  "version": "1.0.0",
+  "homepage": "https://github.com/kevinbalicot/github-dashboard",
+  "authors": [
+    "Kevin B <kevinbalicot@gmail.com>"
+  ],
+  "description": "A github dashboard",
+  "keywords": [
+    "dashboard"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "fontawesome": "~4.4.0"
+  }
+}

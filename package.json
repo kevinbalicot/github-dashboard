@@ -1,0 +1,29 @@
+{
+  "name": "github-dasboard",
+  "version": "1.0.0",
+  "description": "A dashboard display github repository information",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinbalicot/github-dashboard.git"
+  },
+  "keywords": [
+    "dashboard"
+  ],
+  "author": "kevin balicot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinbalicot/github-dashboard/issues"
+  },
+  "homepage": "https://github.com/kevinbalicot/github-dashboard",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-flatten": "^0.1.1",
+    "gulp-less": "^3.0.3"
+  }
+}
