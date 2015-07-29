@@ -5,6 +5,9 @@ var connect = require('gulp-connect');
 var flatten = require('gulp-flatten');
 var less = require('gulp-less');
 var concat = require('gulp-concat');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var reactify = require('reactify');
 
 gulp.task('server', function () {
     connect.server({
@@ -34,7 +37,7 @@ gulp.task('less', function () {
 });
 
 var css = [
-  './bower_components/fontawesome/css/font-awesome.css'
+  './bower_components/fontawesome/css/font-awesome.min.css'
 ];
 
 gulp.task('css', function () {
@@ -42,6 +45,28 @@ gulp.task('css', function () {
     .pipe(concat('libs.css'))
     .pipe(gulp.dest('./public/css'))
     .pipe(connect.reload())
+  ;
+});
+
+var js = [];
+
+gulp.task('js', function () {
+  gulp.src(js)
+    .pipe(concat('libs.js'))
+    .pipe(gulp.dest('./public/js'))
+    .pipe(connect.reload())
+  ;
+});
+
+gulp.task('app', function () {
+  browserify('./src/app/app.js')
+    .transform(reactify)
+    .bundle()
+    .on('error', function (err) {
+      console.log('Error: ' + err.message);
+    })
+    .pipe(source('app.js'))
+    .pipe(gulp.dest('./public/js'))
   ;
 });
 
@@ -63,8 +88,8 @@ gulp.task('font', function () {
 gulp.task('watch', function () {
   gulp.watch(['./src/**/*.less'], ['less']);
   gulp.watch(['./src/index.html'], ['index']);
-  //gulp.watch(['./src/**/*.js'], ['app']);
+  gulp.watch(['./src/**/*.js'], ['app']);
 });
 
-gulp.task('default', ['index', 'less', 'css', 'font']);
+gulp.task('default', ['index', 'less', 'css', 'font', 'js', 'app']);
 gulp.task('dev', ['server', 'default', 'watch']);
