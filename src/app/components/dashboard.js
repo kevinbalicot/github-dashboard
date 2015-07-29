@@ -13,7 +13,19 @@ var DashboardComponent = React.createClass({
         }
     },
 
-    componentDidMount: function() {
+    componentWillReceiveProps: function() {
+
+        var params = {
+            username: this.props.username,
+            repository: this.props.repository
+        };
+
+        console.log(params);
+
+        this.issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
+        this.commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
+        this.commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
+        this.branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
 
         $.get(this.commitsUrl, function(result) {
 
@@ -77,15 +89,7 @@ var DashboardComponent = React.createClass({
 
     render: function() {
 
-        var params = {
-            username: this.props.username,
-            repository: this.props.repository
-        };
 
-        this.issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
-        this.commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
-        this.commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
-        this.branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
 
         return (
             <section className="row">
