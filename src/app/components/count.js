@@ -3,29 +3,12 @@
 /** @jsx React.DOM */
 var CountComponent = React.createClass({
 
-    getInitialState: function(){
-        return {
-            count: 0
-        }
-    },
-
-    componentDidMount: function() {
-
-        $.get(this.props.source, function(result) {
-
-            if (this.isMounted()) {
-                this.setState({
-                    count: result.length
-                });
-            }
-        }.bind(this));
-    },
-
     render: function() {
 
         var title = this.props.title || 'NO TITLE';
         var level = this.props.level || '';
         var icon = this.props.icon || '';
+        var count = this.props.count || 0;
 
         title = title.toUpperCase();
 
@@ -38,7 +21,7 @@ var CountComponent = React.createClass({
                     <p>{title}</p>
                     <i className={iconClass}></i>
                     <hr/>
-                    <span className="text-x2">{this.state.count}</span>
+                    <span className="text-x2">{count}</span>
                 </section>
             </div>
         );

@@ -49,7 +49,8 @@ gulp.task('css', function () {
 });
 
 var js = [
-    './bower_components/jquery/dist/jquery.min.js'
+    './bower_components/jquery/dist/jquery.min.js',
+    './bower_components/Chart.js/Chart.min.js'
 ];
 
 gulp.task('js', function () {

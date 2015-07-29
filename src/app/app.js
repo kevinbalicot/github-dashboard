@@ -3,6 +3,9 @@ window.React = React;
 
 require('./components/dashboard');
 require('./components/count');
+require('./components/linksList');
+
+require('./services/apiLinkBuilder');
 
 var ApplicationComposent = React.createClass({
     render: function() {
