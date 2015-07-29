@@ -15,7 +15,7 @@ var DashboardComponent = React.createClass({
 
     componentDidMount: function() {
 
-        $.get(this.countCommitsUrl, function(result) {
+        $.get(this.commitsUrl, function(result) {
 
             if (this.isMounted()) {
                 var items = [];
@@ -34,7 +34,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.countCommitsUrl, function(result) {
+        $.get(this.commitsUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -44,7 +44,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.countIssuesUrl, function(result) {
+        $.get(this.issuesUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -54,7 +54,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.countCommentsUrl, function(result) {
+        $.get(this.commentsUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -64,7 +64,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.countBranchesUrl, function(result) {
+        $.get(this.branchUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -82,10 +82,10 @@ var DashboardComponent = React.createClass({
             repository: this.props.repository
         };
 
-        this.countIssuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
-        this.countCommitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
-        this.countCommentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
-        this.countBranchesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
+        this.issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
+        this.commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
+        this.commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
+        this.branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
 
         return (
             <section className="row">
