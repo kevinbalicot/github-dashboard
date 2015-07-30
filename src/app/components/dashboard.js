@@ -8,6 +8,7 @@ var DashboardComponent = React.createClass({
             repository: this.props.repository,
             username: this.props.username,
             commits: [],
+            issues: [],
             countCommits: 0,
             countIssues: 0,
             countBranches: 0,
@@ -48,26 +49,29 @@ var DashboardComponent = React.createClass({
                 }
 
                 this.setState({
+                    countCommits: result.length,
                     commits: items
                 });
             }
 
         }.bind(this));
 
-        $.get(commitsUrl, function(result) {
-
-            if (this.isMounted()) {
-                this.setState({
-                    countCommits: result.length
-                });
-            }
-
-        }.bind(this));
+       
 
         $.get(issuesUrl, function(result) {
-
+console.log(result);
             if (this.isMounted()) {
+                var items = [];
+
+                for (var i = 0; i < result.length; i++) {
+                    items.push({
+                        url: result[i].html_url,
+                        text: result[i].title
+                    });
+                }
+                
                 this.setState({
+                    issues: items,
                     countIssues: result.length
                 });
             }
@@ -97,7 +101,8 @@ var DashboardComponent = React.createClass({
 
     render: function() {
 
-        var listTitle = 'commit';
+        var listTitle = 'commits';
+        var issuesListTitle = 'issues';
         
         if (this.state.countCommits >= 100) {
             listTitle += ' - last 100';
@@ -108,11 +113,17 @@ var DashboardComponent = React.createClass({
         if (countCommits >= 100) {
             countCommits += '+';
         }
+        var issuesListComponent = '';
+        
+        if (this.state.countIssues > 0) {
+            issuesListComponent = <LinksListComponent title={issuesListTitle} items={this.state.issues} panelClasses="dark"/>;
+        }
         
         return (
             <section className="row">
                 <section className="column">
-                    <LinksListComponent title={listTitle} items={this.state.commits}/>
+                    {issuesListComponent}
+                    <LinksListComponent title={listTitle} items={this.state.commits} listClasses="border"/>
                 </section>
                 <section className="column">
                     <CountComponent count={countCommits} title="commits" level="info" icon="fa-clock-o" />
