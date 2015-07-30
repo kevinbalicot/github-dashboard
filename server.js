@@ -13,4 +13,5 @@ router.get('/', function(req, res) {
 
 app.use('/', router);
 
+console.log('Server start');
 app.listen(8081);
