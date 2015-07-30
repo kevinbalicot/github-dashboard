@@ -20,11 +20,6 @@ var DashboardComponent = React.createClass({
     },
     
     componentWillReceiveProps: function(props) {
-        this.setState({
-            repository: props.repository,
-            username: props.username
-        });
-        
         this.retrieveInfo(props.username, props.repository);
     },
     
@@ -34,12 +29,10 @@ var DashboardComponent = React.createClass({
             username: username,
             repository: repository
         };
-        
-        console.log(params);
 
         var issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
-        var commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
-        var commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
+        var commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params, { per_page: 100 });
+        var commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params, { per_page: 100 });
         var branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
 
         $.get(commitsUrl, function(result) {
@@ -104,13 +97,25 @@ var DashboardComponent = React.createClass({
 
     render: function() {
 
+        var listTitle = 'commit';
+        
+        if (this.state.countCommits >= 100) {
+            listTitle += ' - last 100';
+        }
+        
+        var countCommits = this.state.countCommits;
+        
+        if (countCommits >= 100) {
+            countCommits += '+';
+        }
+        
         return (
             <section className="row">
                 <section className="column">
-                    <LinksListComponent title="commits" items={this.state.commits}/>
+                    <LinksListComponent title={listTitle} items={this.state.commits}/>
                 </section>
                 <section className="column">
-                    <CountComponent count={this.state.countCommits} title="commits" level="info" icon="fa-clock-o" />
+                    <CountComponent count={countCommits} title="commits" level="info" icon="fa-clock-o" />
                     <CountComponent count={this.state.countIssues} title="issues" level="success" icon="fa-exclamation-circle" />
                     <CountComponent count={this.state.countComments} title="comments" level="warning" icon="fa-comment" />
                     <CountComponent count={this.state.countBranches} title="branches" level="primary" icon="fa-code-fork" />

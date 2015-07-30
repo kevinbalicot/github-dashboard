@@ -33,7 +33,6 @@ var ApplicationComposent = React.createClass({
 
     handleChange: function(event) {
         this.setState({repository: event.target.value});
-        //this.forceUpdate();
     },
 
     render: function() {
@@ -61,7 +60,7 @@ var ApplicationComposent = React.createClass({
                 </div>
             );
         } else {
-            return (<div>Chargement ...</div>);
+            return (<div id="loading">Chargement <i className="fa fa-spinner fa-spin"></i></div>);
         }
     }
 });
@@ -71,5 +70,3 @@ React.render(
     <ApplicationComposent />,
     document.getElementById('content')
 );
-
-
