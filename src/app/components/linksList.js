@@ -16,7 +16,7 @@ var LinksListComponent = React.createClass({
                     <ul>
                         {
                             this.props.items.map(function(item) {
-                                return <a href={item.url} target="_blank"><li>{item.text}</li></a>
+                                return <a href={item.url} target="_blank"><li key={item.text}>{item.text}</li></a>
                             })
                         }
                     </ul>

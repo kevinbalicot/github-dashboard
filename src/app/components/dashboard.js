@@ -5,6 +5,8 @@ var DashboardComponent = React.createClass({
 
     getInitialState: function(){
         return {
+            repository: this.props.repository,
+            username: this.props.username,
             commits: [],
             countCommits: 0,
             countIssues: 0,
@@ -13,21 +15,34 @@ var DashboardComponent = React.createClass({
         }
     },
 
-    componentWillReceiveProps: function() {
-
+    componentWillMount: function() {
+        this.retrieveInfo(this.state.username, this.state.repository);
+    },
+    
+    componentWillReceiveProps: function(props) {
+        this.setState({
+            repository: props.repository,
+            username: props.username
+        });
+        
+        this.retrieveInfo(props.username, props.repository);
+    },
+    
+    retrieveInfo: function(username, repository) {
+        
         var params = {
-            username: this.props.username,
-            repository: this.props.repository
+            username: username,
+            repository: repository
         };
-
+        
         console.log(params);
 
-        this.issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
-        this.commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
-        this.commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
-        this.branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
+        var issuesUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/issues', params);
+        var commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params);
+        var commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params);
+        var branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
 
-        $.get(this.commitsUrl, function(result) {
+        $.get(commitsUrl, function(result) {
 
             if (this.isMounted()) {
                 var items = [];
@@ -46,7 +61,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.commitsUrl, function(result) {
+        $.get(commitsUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -56,7 +71,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.issuesUrl, function(result) {
+        $.get(issuesUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -66,7 +81,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.commentsUrl, function(result) {
+        $.get(commentsUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -76,7 +91,7 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-        $.get(this.branchUrl, function(result) {
+        $.get(branchUrl, function(result) {
 
             if (this.isMounted()) {
                 this.setState({
@@ -88,8 +103,6 @@ var DashboardComponent = React.createClass({
     },
 
     render: function() {
-
-
 
         return (
             <section className="row">
