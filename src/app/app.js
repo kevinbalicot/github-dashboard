@@ -1,5 +1,7 @@
+var moment = require('moment');
 var React = require('react');
 window.React = React;
+window.moment = moment;
 
 require('./components/dashboard');
 require('./components/count');

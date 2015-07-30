@@ -35,7 +35,24 @@ var DashboardComponent = React.createClass({
         var commitsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/commits', params, { per_page: 100 });
         var commentsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/comments', params, { per_page: 100 });
         var branchUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/branches', params);
+        var eventsUrl = ApiLinkBuilder.generateLink('/repos/{username}/{repository}/events', params);
 
+        $.get(eventsUrl, function(result) {
+            
+            if (this.isMounted()) {
+                var items = [];
+
+                for (var i = 0; i < result.length; i++) {
+                    items.push({
+                        date: moment(result[i].created_at).format('YYYY-MM-DD')
+                    });
+                }
+
+                console.log(items);
+            }
+
+        }.bind(this));
+        
         $.get(commitsUrl, function(result) {
 
             if (this.isMounted()) {
@@ -56,10 +73,8 @@ var DashboardComponent = React.createClass({
 
         }.bind(this));
 
-       
-
         $.get(issuesUrl, function(result) {
-console.log(result);
+
             if (this.isMounted()) {
                 var items = [];
 
