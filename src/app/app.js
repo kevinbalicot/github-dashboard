@@ -44,7 +44,7 @@ var ApplicationComposent = React.createClass({
                 <div>
                     <nav>
                         <i className="fa fa-bar-chart"></i>
-                        Github Dashboard for {this.state.repository}
+                        Github Dashboard for "{this.state.repository}" repository
                         <span className="put-right">
                             Repository :
                             <select onChange={this.handleChange}>
