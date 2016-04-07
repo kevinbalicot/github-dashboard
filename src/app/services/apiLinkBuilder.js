@@ -3,7 +3,7 @@
 var ApiLinkBuilder = function() {
 
     this.domain = 'https://api.github.com';
-    this.token = '53d9556eb9c655d12f6dec56d9687ed036f3e1f4';
+    this.token = 'YOUR_ACCESS_KEY';
 };
 
 /**
